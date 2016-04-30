@@ -1,4 +1,9 @@
 
+html, body {
+  height: 100%;
+}
+
+/*-------SPLASH SCREEN----------- */
 #splash {
   position: absolute;
   top: 50px;
@@ -49,24 +54,19 @@
   width: 75%;
   padding: 2px;
 }
+/*---------------END SPLASH SCREEN----------*/
+
+/*---------------TIC TAC TOE BOARD----------*/
 #tic-tac-board {
   width: 270px;
   margin: auto;
   margin-top: 25px;
-  clear: both;
-  overflow: hidden;
 }
-#tic-tac-board:after {
-  content: "";
-  clear: both;
-}
-
+ 
 .row {
   width: 100%;
   height: 90px;
   border-bottom: 1px solid black;
-  clear: both;
-  overflow: hidden;
 }
 
 .row:nth-child(3) {
@@ -88,9 +88,34 @@
   border-right: none;
 }
 
+/*--------------END TIC TAC TOE BOARD---------*/
+
+
+
+#score ul {
+  height: 25px;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  
+}
+#score li {
+  background-color: #ddd;
+  border-right: 2px solid white;
+  text-align: center;
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+
+/*transforming seemed like a good idea in the begging..now not so sure..
+/*make positioning other elements difficult*/
+
 @media (min-width: 400px){
  
-  #splash, #tic-tac-board {
+  #splash, #tic-tac-board{
    transform: scale(1.5) translateY(55px);
   }
   
@@ -104,10 +129,25 @@
   .selectable:hover {
     background-color: #ddd;
   }
+  
+  #score {
+    transform: translateY(150px);
+  }
+  #score ul {
+    width: 75%;
+    font-size: 20px
+  }
 }
 
 @media (min-width: 850px){
   #splash, #tic-tac-board {
     transform: scale(2.5) translateY(100px);
+  }
+  #score{
+    transform: translateY(500px);
+  } 
+  #score ul {
+    width: 50%;
+    font-size: 24px;
   }
 }

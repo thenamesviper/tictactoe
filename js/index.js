@@ -38,6 +38,9 @@ function startGame() {
 function Player(name, piece) {
       this.name = name;
       this.piece = piece;
+      
+      //I think piecesSelected can be eliminated with a bit
+      //of cleaning up
       this.piecesSelected = [];       //list of selected boxes 1-9
       this.canWinWith = [
             [1, 2, 3],
@@ -231,19 +234,59 @@ function checkForWin(arrayOfArrays){
 function endGame(winner, loser) {
       console.log("game over");
       if(winner == null) {
-            console.log("game ended in a tie");
+            winningChanges({name: "tie"});
       } else {
-            console.log("The " + winner.name + " is the winner!");
+            winningChanges(winner);
       }
       
-      $("body").append("playyer wins");
-      
       setTimeout(function() {
+            $("ul li").attr("style", "");
             $("#splash").css("display", "inherit");
-            $(".square").html("&nbsp").addClass("selectable");
+            $(".square").attr("style", "").html("&nbsp").addClass("selectable");
             startGame();
-      }, 2000);
+      }, 3000);
 }
+
+function winningChanges(winner){
+      if(winner.name != "tie"){
+            colorWinners(winner.piecesSelected);
+      }
+      let winnerId = "#" + winner.name.toLowerCase() + "-wins";
+      let winnerCount = +$(winnerId + ">span").text();
+      winnerCount ++;
+      $(winnerId + ">span").text(winnerCount);
+      $(winnerId).css("background-color", "red");
+      
+}
+
+
+//placeholder..im sure a better method can be found
+function colorWinners(pieces) {
+      let possibleWinners =  [  [1, 2, 3],
+                        [1, 5, 9],
+                        [1, 4, 7],
+                        [2, 5, 8],
+                        [3, 5, 7],
+                        [3, 6, 9],
+                        [4, 5, 6],
+                        [7, 8, 9]
+            ];
+      let actualWinners = [];
+      for(let i = 0; i <8; i++){
+            if(possibleWinners[i].every(function(value){
+                  return pieces.indexOf(value) != -1;      
+            })
+            ) {
+                actualWinners.push(possibleWinners[i]);
+            }}
+     let together = actualWinners.reduce(function(a,b){ return a.concat(b);})
+     
+     for(let i = 0; i < together.length; i++) {
+           $(".square").eq(together[i] - 1).css("color", "red");
+     }
+}
+
+
 
 
 
